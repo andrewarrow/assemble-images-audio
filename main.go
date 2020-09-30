@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -13,17 +13,17 @@ func main() {
 	if len(os.Args) == 1 {
 		return
 	}
-	files, _ := ioutil.ReadDir(os.Args[1])
-	prevNum := "000"
+	files, _ := ioutil.ReadDir(os.Args[1] + "/images")
+	m := map[string][]int{}
 	for _, f := range files {
 		name := f.Name()
 		if strings.HasSuffix(name, ".png") {
 			three := name[0:3]
-			if three != prevNum {
-				fmt.Println(three, name)
-			}
-			prevNum = three
+			min := name[4:6]
+
+			mini, _ := strconv.Atoi(min)
+			m[three] = append(m[three], mini)
 		}
 	}
-	exec.Command("cat_images.sh").Run()
+	fmt.Println(m)
 }
