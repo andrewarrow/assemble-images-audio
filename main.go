@@ -29,10 +29,27 @@ func main() {
 	}
 	for i := 0; i < len(m); i++ {
 		key := fmt.Sprintf("%03d", i+1)
+		size := len(m[key])
+		mapOfInts := map[int]bool{}
 		for _, v := range m[key] {
-			fmt.Println(key, v)
-			exec.Command("cp", fmt.Sprintf("%s/%s_%02d.png", dir, key, v),
-				fmt.Sprintf("video/%s.png", "hi")).Run()
+			mapOfInts[v] = true
+		}
+		for i, v := range m[key] {
+			if i == size-1 {
+			} else {
+				vstart := v
+				for {
+					exec.Command("cp", fmt.Sprintf("%s/%s_%02d.png", dir, key, v),
+						fmt.Sprintf("video/%s_%02d.png", key, vstart)).Run()
+					vstart++
+					if mapOfInts[vstart] == false {
+						exec.Command("cp", fmt.Sprintf("%s/%s_%02d.png", dir, key, v),
+							fmt.Sprintf("video/%s_%02d.png", key, vstart)).Run()
+					} else {
+						break
+					}
+				}
+			}
 		}
 	}
 }
