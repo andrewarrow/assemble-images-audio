@@ -63,5 +63,5 @@ func main() {
 
 func doCopy(dir, key, order, seconds string, vstart int) {
 	exec.Command("cp", fmt.Sprintf("%s/%s_%s-%s.png", dir, key, order, seconds),
-		fmt.Sprintf("video/%s_%02d.png", key, vstart)).Run()
+		fmt.Sprintf("video/%s_%s-%02d.png", key, order, vstart)).Run()
 }
