@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -13,7 +14,8 @@ func main() {
 	if len(os.Args) == 1 {
 		return
 	}
-	files, _ := ioutil.ReadDir(os.Args[1] + "/images")
+	dir := os.Args[1] + "/images"
+	files, _ := ioutil.ReadDir(dir)
 	m := map[string][]int{}
 	for _, f := range files {
 		name := f.Name()
@@ -25,5 +27,12 @@ func main() {
 			m[three] = append(m[three], mini)
 		}
 	}
-	fmt.Println(m)
+	for i := 0; i < len(m); i++ {
+		key := fmt.Sprintf("%03d", i+1)
+		for _, v := range m[key] {
+			fmt.Println(key, v)
+			exec.Command("cp", fmt.Sprintf("%s/%s_%02d.png", dir, key, v),
+				fmt.Sprintf("video/%s.png", "hi")).Run()
+		}
+	}
 }
