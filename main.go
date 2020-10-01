@@ -14,6 +14,7 @@ func main() {
 	if len(os.Args) == 1 {
 		return
 	}
+	exec.Command("rm", "video/*.png").Run()
 	dir := os.Args[1] + "/images"
 	files, _ := ioutil.ReadDir(dir)
 	for _, f := range files {
@@ -31,34 +32,6 @@ func main() {
 			}
 		}
 	}
-	/*
-		for i := 0; i < len(m); i++ {
-			key := fmt.Sprintf("%03d", i+1)
-			size := len(m[key])
-			mapOfInts := map[int]bool{}
-			for _, v := range m[key] {
-				mapOfInts[v] = true
-			}
-			for i, v := range m[key] {
-				if i == size-1 {
-					for j := 0; j < 5; j++ {
-						doCopy(dir, key, v, v+j)
-					}
-				} else {
-					vstart := v
-					for {
-						doCopy(dir, key, v, vstart)
-						vstart++
-						if mapOfInts[vstart] == false {
-							doCopy(dir, key, v, vstart)
-						} else {
-							break
-						}
-					}
-				}
-			}
-		}
-	*/
 }
 
 func doCopy(dir, key, order, seconds string, vstart int) {
