@@ -11,12 +11,18 @@ import (
 
 func main() {
 	fmt.Println("assemble-images-audio <directory>")
+	files, _ := ioutil.ReadDir("video/")
+	for _, f := range files {
+		name := f.Name()
+		if strings.HasSuffix(name, ".png") {
+			os.Remove("video/" + name)
+		}
+	}
 	if len(os.Args) == 1 {
 		return
 	}
-	exec.Command("rm", "video/*.png").Run()
 	dir := os.Args[1] + "/images"
-	files, _ := ioutil.ReadDir(dir)
+	files, _ = ioutil.ReadDir(dir)
 	for _, f := range files {
 		name := f.Name()
 		if strings.HasSuffix(name, ".png") {
